@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="todoApp">
+<head>
+    <meta charset="UTF-8">
+    <title>To-Do List</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script >angular.module('todoApp', [])
+        .controller('TodoController', ['$scope', function($scope) {
+            $scope.todos = [];
+    
+            $scope.addTodo = function() {
+                if ($scope.newTodo.trim() !== '') {
+                    $scope.todos.push({ text: $scope.newTodo, completed: false });
+                    $scope.newTodo = '';
+                }
+            };
+    
+            $scope.deleteTodo = function(todo) {
+                var index = $scope.todos.indexOf(todo);
+                if (index !== -1) {
+                    $scope.todos.splice(index, 1);
+                }
+            };
+    
+            $scope.toggleCompleted = function(todo) {
+                todo.completed = !todo.completed;
+            };
+        }]);
+    </script>
+    <style>
+        body{
+           background-image: url(aa.gif);
+           background-repeat: no-repeat;
+           background-size: cover;
+        }
+        .completed span {
+            background-color:yellow ;
+        }
+        span{
+            text-transform: uppercase ;
+        }
+        ul{
+            list-style-type: none;
+        }
+        div{
+            background-color:lightgoldenrodyellow;
+            color:red;
+            
+        }
+        .div{
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width:30%;
+            height:100px;
+        }
+        h1{
+            color:gold;
+            text-shadow: 2px 2px 5px red;
+            border: 2px solid black;
+        }
+    </style>
+</head>
+<body>
+    <center><h1>MY DAHSH BOARD</h1><div class="div">
+    <div ng-controller="TodoController">
+        <br><br>
+        <input type="text" ng-model="newTodo" placeholder="Add a new task">
+        <button ng-click="addTodo()">Add</button>
+        <ul>
+            <li ng-repeat="todo in todos" ng-class="{completed: todo.completed}">
+                <br>
+                <div> <input type="checkbox" ng-model="todo.completed" ng-click="toggleCompleted(todo)"><span>{{todo.text}}</span>
+                <button ng-click="deleteTodo(todo)">Delete</button></div>
+            </li>
+        </ul>
+    </div></center></div>
+</body>
+</html>
